@@ -1,4 +1,4 @@
-module github.com/adamjohnston/agent
+module github.com/adamjohnston/agents
 
 go 1.23.0
 
