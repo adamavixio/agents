@@ -3,7 +3,7 @@ package inbound
 import (
 	"context"
 
-	"github.com/adamjohnston/agent/internal/domain"
+	"github.com/adamjohnston/agents/internal/domain"
 )
 
 type AgentCommandHandler interface {

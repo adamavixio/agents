@@ -1,12 +1,12 @@
 package service
 
 import (
-	"github.com/adamjohnston/agent/internal/port/inbound"
-	"github.com/adamjohnston/agent/internal/port/outbound"
+	"context"
+
+	"github.com/adamjohnston/agents/internal/domain"
 )
 
 type Orchestrator interface {
-	outbound.AgentStore
-	inbound.AgentCommandHandler
-	outbound.AgentEventPublisher
+	RegisterAgent(context.Context, domain.RegisterAgentCommand) error
+	UnregisterAgent(context.Context, domain.UnregisterAgentCommand) error
 }

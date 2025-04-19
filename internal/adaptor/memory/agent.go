@@ -3,17 +3,12 @@ package memory
 import (
 	"context"
 
-	"github.com/adamjohnston/agent/internal/domain"
-	"github.com/adamjohnston/agent/internal/port/repository"
-	"github.com/adamjohnston/agent/pkg/collection"
+	"github.com/adamjohnston/agents/internal/domain"
+	"github.com/adamjohnston/agents/pkg/collection"
 )
 
 type AgentStore struct {
-	store collection.Store[domain.AgentId]
-}
-
-func NewAgentStore() repository.AgentStore {
-	return AgentStore{store: collection.NewStore[domain.AgentID]()}
+	store collection.Store[domain.AgentID]
 }
 
 func (as AgentStore) Put(ctx context.Context, id domain.AgentID) error {

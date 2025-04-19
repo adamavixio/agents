@@ -1,11 +1,14 @@
 package service
 
 import (
-	"github.com/adamjohnston/agent/internal/port/inbound"
-	"github.com/adamjohnston/agent/internal/port/outbound"
+	"context"
+
+	"github.com/adamjohnston/agents/internal/domain"
 )
 
 type Worker interface {
-	inbound.AgentEventHandler
-	outbound.AgentCommandPublisher
+	Register(context.Context, domain.AgentID) error
+	Unregister(context.Context, domain.AgentID) error
+	// OnAgentRegistered(context.Context, domain.AgentRegisteredEvent) error
+	// OnAgentUnregistered(context.Context, domain.AgentUnregisteredEvent) error
 }

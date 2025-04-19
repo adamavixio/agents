@@ -3,7 +3,7 @@ package outbound
 import (
 	"context"
 
-	"github.com/adamjohnston/agent/internal/domain"
+	"github.com/adamjohnston/agents/internal/domain"
 )
 
 type AgentStore interface {
