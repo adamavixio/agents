@@ -1,0 +1,35 @@
+version: "1.0"
+
+target:
+  name: "Research and summarize Go concurrency patterns"
+  description: "Analyze different Go concurrency patterns and produce a summarized report"
+
+agents:
+  - id: "researcher"
+    name: "Research Agent"
+    role: "Searches and collects information about Go concurrency patterns"
+  
+  - id: "writer"
+    name: "Writer Agent"
+    role: "Compiles and formats information into a cohesive report"
+
+tasks:
+  - id: "initial_research"
+    name: "Research"
+    agent: "researcher"
+    action: "collect_information"
+    inputs:
+      - "go concurrency patterns"
+    outputs:
+      - type: "message"
+        to: "writer"
+  
+  - id: "compile_report"
+    name: "Research"
+    agent: "writer"
+    action: "write_report"
+    depends_on:
+      - "initial_research"
+    outputs:
+      - type: "file"
+        path: "report.md"

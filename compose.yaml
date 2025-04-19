@@ -1,0 +1,34 @@
+services:
+  nats:
+    image: nats:latest
+    container_name: nats
+    ports:
+      - "4222:4222"     
+      - "8222:8222"
+    networks:
+      - agent-network
+
+  orchestrator:
+    build:
+      context: .
+      dockerfile: ./build/orchestrator/dockerfile
+    container_name: orchestrator
+    depends_on:
+      - nats
+    networks:
+      - agent-network
+
+  agent:
+    build:
+      context: .
+      dockerfile: ./build/agent/dockerfile
+    container_name: agent
+    depends_on:
+      - nats
+      - orchestrator
+    networks:
+      - agent-network
+
+networks:
+  agent-network:
+    driver: bridge

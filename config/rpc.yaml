@@ -1,0 +1,4 @@
+services:
+  - name: orchestrator  
+    method: register-agent
+    
