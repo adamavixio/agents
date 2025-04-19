@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/adamjohnston/agent/pkg/telemetry"
+	"github.com/adamjohnston/agents/pkg/telemetry"
 )
 
 type message[T any] struct {

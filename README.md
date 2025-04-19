@@ -9,7 +9,7 @@ This protocol allows you to define a set of AI agents, their capabilities, commu
 ## Installation
 
 ```bash
-go get github.com/adamjohnston/agentprotocol
+go get github.com/adamjohnston/agentsprotocol
 ```
 
 ## Configuration

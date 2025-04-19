@@ -3,7 +3,7 @@ package message
 import (
 	"context"
 
-	"github.com/adamjohnston/agent/pkg/telemetry"
+	"github.com/adamjohnston/agents/pkg/telemetry"
 	"github.com/nats-io/nats.go"
 )
 
