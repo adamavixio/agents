@@ -7,9 +7,9 @@ import (
 )
 
 type AgentStore interface {
-	Put(ctx context.Context, id domain.AgentID) error
-	Has(ctx context.Context, id domain.AgentID) (bool, error)
-	Del(ctx context.Context, id domain.AgentID) error
+	Put(context.Context, domain.AgentID) error
+	Has(context.Context, domain.AgentID) (bool, error)
+	Del(context.Context, domain.AgentID) error
 }
 
 type AgentPublisher interface {

@@ -34,15 +34,15 @@ func (o orchestrator) SubscribeRegisterAgent(
 	ctx context.Context,
 ) error {
 	return o.subscriber.SubscribeRegisterAgent(ctx, func(cmd domain.RegisterAgentCommand) error {
-		if err := o.store.Put(ctx, cmd.ID); err != nil {
+		if err := o.store.Put(ctx, cmd.AgentID); err != nil {
 			if errors.Is(err, domain.ErrorAlreadyExists) {
-				log.Printf("Register Agent: Agent with ID '%v' already exists", cmd.ID)
+				log.Printf("Register Agent: Agent with ID '%v' already exists", cmd.AgentID)
 				return nil
 			}
 			return err
 		}
 		return o.publisher.PublishAgentRegistered(ctx, domain.AgentRegisteredEvent{
-			ID:        cmd.ID,
+			AgentID:   cmd.AgentID,
 			Timestamp: time.Now(),
 		})
 	})
@@ -52,15 +52,15 @@ func (o orchestrator) SubscribeUnregisterAgent(
 	ctx context.Context,
 ) error {
 	return o.subscriber.SubscribeUnregisterAgent(ctx, func(cmd domain.UnregisterAgentCommand) error {
-		if err := o.store.Del(ctx, cmd.ID); err != nil {
+		if err := o.store.Del(ctx, cmd.AgentID); err != nil {
 			if errors.Is(err, domain.ErrorNotFound) {
-				log.Printf("Unregister Agent: Agent with ID '%v' does not exists", cmd.ID)
+				log.Printf("Unregister Agent: Agent with ID '%v' does not exists", cmd.AgentID)
 				return nil
 			}
 			return err
 		}
 		return o.publisher.PublishAgentUnregistered(ctx, domain.AgentUnregisteredEvent{
-			ID:        cmd.ID,
+			AgentID:   cmd.AgentID,
 			Timestamp: time.Now(),
 		})
 	})

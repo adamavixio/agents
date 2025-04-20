@@ -9,19 +9,19 @@ type Agent struct {
 }
 
 type RegisterAgentCommand struct {
-	ID AgentID
+	AgentID AgentID
 }
 
 type UnregisterAgentCommand struct {
-	ID AgentID
+	AgentID AgentID
 }
 
 type AgentRegisteredEvent struct {
-	ID        AgentID
+	AgentID   AgentID
 	Timestamp time.Time
 }
 
 type AgentUnregisteredEvent struct {
-	ID        AgentID
+	AgentID   AgentID
 	Timestamp time.Time
 }

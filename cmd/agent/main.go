@@ -29,7 +29,7 @@ func main() {
 		if event, err := worker.Register(ctx, "agent_1"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Registered: %v\n", event.ID)
+			log.Printf("Registered: %v\n", event.AgentID)
 		}
 	}
 
@@ -40,7 +40,7 @@ func main() {
 		if event, err := worker.Register(ctx, "agent_2"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Registered: %v\n", event.ID)
+			log.Printf("Registered: %v\n", event.AgentID)
 		}
 	}
 
@@ -51,7 +51,7 @@ func main() {
 		if event, err := worker.Register(ctx, "agent_1"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Registered: %v\n", event.ID)
+			log.Printf("Registered: %v\n", event.AgentID)
 		}
 	}
 
@@ -62,7 +62,7 @@ func main() {
 		if event, err := worker.Register(ctx, "agent_2"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Registered: %v\n", event.ID)
+			log.Printf("Registered: %v\n", event.AgentID)
 		}
 	}
 
@@ -73,7 +73,7 @@ func main() {
 		if event, err := worker.Unregister(ctx, "agent_1"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Unregistered: %v\n", event.ID)
+			log.Printf("Unregistered: %v\n", event.AgentID)
 		}
 	}
 
@@ -84,7 +84,7 @@ func main() {
 		if event, err := worker.Unregister(ctx, "agent_2"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Unregistered: %v\n", event.ID)
+			log.Printf("Unregistered: %v\n", event.AgentID)
 		}
 	}
 
@@ -95,7 +95,7 @@ func main() {
 		if event, err := worker.Unregister(ctx, "agent_1"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Unregistered: %v\n", event.ID)
+			log.Printf("Unregistered: %v\n", event.AgentID)
 		}
 	}
 
@@ -106,7 +106,7 @@ func main() {
 		if event, err := worker.Unregister(ctx, "agent_2"); err != nil {
 			log.Println(err)
 		} else {
-			log.Printf("Unregistered: %v\n", event.ID)
+			log.Printf("Unregistered: %v\n", event.AgentID)
 		}
 	}
 }

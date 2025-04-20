@@ -29,7 +29,7 @@ func (a agentPublisher) PublishRegisterAgent(ctx context.Context, cmd domain.Reg
 	if err != nil {
 		return err
 	}
-	subj := fmt.Sprintf("command.agent.register.%v", cmd.ID)
+	subj := fmt.Sprintf("command.agent.register.%v", cmd.AgentID)
 	return a.conn.Publish(subj, data)
 }
 
@@ -38,7 +38,7 @@ func (a agentPublisher) PublishUnregisterAgent(ctx context.Context, cmd domain.U
 	if err != nil {
 		return err
 	}
-	subj := fmt.Sprintf("command.agent.unregister.%v", cmd.ID)
+	subj := fmt.Sprintf("command.agent.unregister.%v", cmd.AgentID)
 	return a.conn.Publish(subj, data)
 }
 
@@ -47,7 +47,7 @@ func (a agentPublisher) PublishAgentRegistered(ctx context.Context, evt domain.A
 	if err != nil {
 		return err
 	}
-	subject := fmt.Sprintf("event.agent.registered.%v", evt.ID)
+	subject := fmt.Sprintf("event.agent.registered.%v", evt.AgentID)
 	return a.conn.Publish(subject, data)
 }
 
@@ -56,7 +56,7 @@ func (a agentPublisher) PublishAgentUnregistered(ctx context.Context, evt domain
 	if err != nil {
 		return err
 	}
-	subj := fmt.Sprintf("event.agent.unregistered.%v", evt.ID)
+	subj := fmt.Sprintf("event.agent.unregistered.%v", evt.AgentID)
 	return a.conn.Publish(subj, data)
 }
 
@@ -126,8 +126,8 @@ func (a agentSubscriber) SubscribeUnregisterAgent(ctx context.Context, handler f
 	return nil
 }
 
-func (a agentSubscriber) WaitAgentRegistered(ctx context.Context, id domain.AgentID) (domain.AgentRegisteredEvent, error) {
-	subj := fmt.Sprintf("event.agent.registered.%v", id)
+func (a agentSubscriber) WaitAgentRegistered(ctx context.Context, AgentID domain.AgentID) (domain.AgentRegisteredEvent, error) {
+	subj := fmt.Sprintf("event.agent.registered.%v", AgentID)
 
 	sub, err := a.conn.SubscribeSync(subj)
 	if err != nil {
@@ -148,8 +148,8 @@ func (a agentSubscriber) WaitAgentRegistered(ctx context.Context, id domain.Agen
 	return evt, nil
 }
 
-func (a agentSubscriber) WaitAgentUnregistered(ctx context.Context, id domain.AgentID) (domain.AgentUnregisteredEvent, error) {
-	subj := fmt.Sprintf("event.agent.unregistered.%v", id)
+func (a agentSubscriber) WaitAgentUnregistered(ctx context.Context, AgentID domain.AgentID) (domain.AgentUnregisteredEvent, error) {
+	subj := fmt.Sprintf("event.agent.unregistered.%v", AgentID)
 
 	sub, err := a.conn.SubscribeSync(subj)
 	if err != nil {

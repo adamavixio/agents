@@ -28,7 +28,9 @@ func (w *worker) Register(
 	ctx context.Context,
 	agentID domain.AgentID,
 ) (domain.AgentRegisteredEvent, error) {
-	cmd := domain.RegisterAgentCommand{ID: agentID}
+	cmd := domain.RegisterAgentCommand{
+		AgentID: agentID,
+	}
 	if err := w.publisher.PublishRegisterAgent(ctx, cmd); err != nil {
 		return domain.AgentRegisteredEvent{}, err
 	}
@@ -39,7 +41,9 @@ func (w *worker) Unregister(
 	ctx context.Context,
 	agentID domain.AgentID,
 ) (domain.AgentUnregisteredEvent, error) {
-	cmd := domain.UnregisterAgentCommand{ID: agentID}
+	cmd := domain.UnregisterAgentCommand{
+		AgentID: agentID,
+	}
 	if err := w.publisher.PublishUnregisterAgent(ctx, cmd); err != nil {
 		return domain.AgentUnregisteredEvent{}, err
 	}

@@ -20,33 +20,33 @@ func NewAgentStore() outbound.AgentStore {
 
 func (a agentStore) Put(
 	ctx context.Context,
-	id domain.AgentID,
+	agentID domain.AgentID,
 ) error {
 	return a.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
-		if t.Has(id) {
+		if t.Has(agentID) {
 			return domain.ErrorAlreadyExists
 		}
-		t.Put(id)
+		t.Put(agentID)
 		return nil
 	})
 }
 
 func (a agentStore) Has(
 	ctx context.Context,
-	id domain.AgentID,
+	agentID domain.AgentID,
 ) (bool, error) {
-	return a.store.Has(ctx, id)
+	return a.store.Has(ctx, agentID)
 }
 
 func (a agentStore) Del(
 	ctx context.Context,
-	id domain.AgentID,
+	agentID domain.AgentID,
 ) error {
 	return a.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
-		if !t.Has(id) {
+		if !t.Has(agentID) {
 			return domain.ErrorNotFound
 		}
-		t.Del(id)
+		t.Del(agentID)
 		return nil
 	})
 }
