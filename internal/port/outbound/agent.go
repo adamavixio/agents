@@ -12,12 +12,9 @@ type AgentStore interface {
 	Del(ctx context.Context, id domain.AgentID) error
 }
 
-type AgentCommandPublisher interface {
-	RegisterAgent(context.Context, domain.RegisterAgentCommand) error
-	UnregisterAgent(context.Context, domain.UnregisterAgentCommand) error
-}
-
-type AgentEventPublisher interface {
-	AgentRegistered(context.Context, domain.AgentRegisteredEvent) error
-	AgentUnregistered(context.Context, domain.AgentUnregisteredEvent) error
+type AgentPublisher interface {
+	PublishRegisterAgent(context.Context, domain.RegisterAgentCommand) error
+	PublishUnregisterAgent(context.Context, domain.UnregisterAgentCommand) error
+	PublishAgentRegistered(context.Context, domain.AgentRegisteredEvent) error
+	PublishAgentUnregistered(context.Context, domain.AgentUnregisteredEvent) error
 }

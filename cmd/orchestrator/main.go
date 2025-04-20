@@ -1,27 +1,38 @@
 package main
 
+import (
+	"context"
+	"log"
+
+	"github.com/adamjohnston/agents/internal/adaptor/memory"
+	"github.com/adamjohnston/agents/internal/adaptor/transport"
+	"github.com/adamjohnston/agents/internal/app"
+	"github.com/nats-io/nats.go"
+)
+
 func main() {
-	// nc, err := nats.Connect("nats://host.docker.internal:4222")
-	// if err != nil {
-	// 	log.Fatalf("failed to connect to NATS: %v", err)
-	// }
-	// defer nc.Drain()
+	conn, err := nats.Connect("nats://host.docker.internal:4222")
+	if err != nil {
+		log.Fatalf("Error connecting to orchestrator: %v", err)
+	}
+	defer conn.Drain()
 
-	// store := adaptor.NewMemorySet[domain.Agent]()
-	// subscriber := adaptor.NewSubscriber[domain.RegisterAgentRequest, domain.RegisterAgentResponse](nc, "agents.store.*")
-	// orchestratorService := service.NewOrchestratorService(store, subscriber)
+	orchestrator := app.NewOrchestrator(
+		memory.NewAgentStore(),
+		transport.NewAgentPublisher(conn),
+		transport.NewAgentSubscriber(conn),
+	)
 
-	// handler := slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{
-	// 	Level:     slog.LevelDebug,
-	// 	AddSource: true,
-	// })
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
-	// orchestratorService.SubscribeWithMiddleware(func(request *domain.RegisterAgentRequest) (*domain.RegisterAgentResponse, error) {
-	// 	if err := orchestratorService.Put(request.Agent); err != nil {
-	// 		return nil, err
-	// 	}
-	// 	return &domain.RegisterAgentResponse{}, nil
-	// }, adaptor.LoggerMiddleware[domain.RegisterAgentRequest, domain.RegisterAgentResponse](slog.New(handler)))
+	if err := orchestrator.SubscribeRegisterAgent(ctx); err != nil {
+		log.Fatalf("Error Registering Agent: %v", err)
+	}
 
-	// select {}
+	if err := orchestrator.SubscribeUnregisterAgent(ctx); err != nil {
+		log.Fatalf("Error Unregistering Agent: %v", err)
+	}
+
+	select {}
 }

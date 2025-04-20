@@ -4,15 +4,25 @@ import (
 	"context"
 
 	"github.com/adamjohnston/agents/internal/domain"
+	"github.com/adamjohnston/agents/internal/port/outbound"
 	"github.com/adamjohnston/agents/pkg/collection"
 )
 
-type AgentStore struct {
+type agentStore struct {
 	store collection.Store[domain.AgentID]
 }
 
-func (as AgentStore) Put(ctx context.Context, id domain.AgentID) error {
-	return as.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
+func NewAgentStore() outbound.AgentStore {
+	return agentStore{
+		store: collection.NewStore[domain.AgentID](),
+	}
+}
+
+func (a agentStore) Put(
+	ctx context.Context,
+	id domain.AgentID,
+) error {
+	return a.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
 		if t.Has(id) {
 			return domain.ErrorAlreadyExists
 		}
@@ -21,14 +31,20 @@ func (as AgentStore) Put(ctx context.Context, id domain.AgentID) error {
 	})
 }
 
-func (as AgentStore) Has(ctx context.Context, id domain.AgentID) (bool, error) {
-	return as.store.Has(ctx, id)
+func (a agentStore) Has(
+	ctx context.Context,
+	id domain.AgentID,
+) (bool, error) {
+	return a.store.Has(ctx, id)
 }
 
-func (as AgentStore) Del(ctx context.Context, id domain.AgentID) error {
-	return as.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
-		if t.Has(id) {
-			return domain.ErrorAlreadyExists
+func (a agentStore) Del(
+	ctx context.Context,
+	id domain.AgentID,
+) error {
+	return a.store.Tx(ctx, func(t collection.Transaction[domain.AgentID]) error {
+		if !t.Has(id) {
+			return domain.ErrorNotFound
 		}
 		t.Del(id)
 		return nil
